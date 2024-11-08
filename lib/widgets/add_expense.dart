@@ -5,6 +5,7 @@ import 'package:expenser/providers/controller_provider.dart';
 
 import 'package:provider/provider.dart';
 
+// TODO: This is a screen and it's under directory [widgets]
 class AddExpense extends StatefulWidget {
   AddExpense({super.key, this.expenseId});
 
@@ -30,26 +31,23 @@ class _AddExpenseState extends State<AddExpense> {
   // }
 
   void _presentDatePicker() async {
+    // TODO: No need to complicate it like this. Refactor.
     if (context.read<ControllerProvider>().expenseDate == null) {
       final now = DateTime.now();
       final firstDate = DateTime(now.year - 1, now.month, now.day);
       final lastDate = DateTime(now.year, now.month, now.day);
-      final pickedDate = await showDatePicker(
-          context: context,
-          initialDate: now,
-          firstDate: firstDate,
-          lastDate: lastDate);
+      final pickedDate = await showDatePicker(context: context, initialDate: now, firstDate: firstDate, lastDate: lastDate);
 
+      // TODO: pickedDate is not null only if user selects a calendar when shown a DatePicker,
+      // TODO: This code will break if user closes the calendar and does not select anything.
+      // TODO: Refactor
       context.read<ControllerProvider>().setExpenseDate(pickedDate!);
     } else {
       final now = DateTime.now();
       final firstDate = DateTime(now.year - 1, now.month, now.day);
       final lastDate = DateTime(now.year, now.month, now.day);
       final pickedDate = await showDatePicker(
-          context: context,
-          initialDate: context.read<ControllerProvider>().expenseDate,
-          firstDate: firstDate,
-          lastDate: lastDate);
+          context: context, initialDate: context.read<ControllerProvider>().expenseDate, firstDate: firstDate, lastDate: lastDate);
       context.read<ControllerProvider>().setExpenseDate(pickedDate!);
     }
   }
@@ -63,8 +61,7 @@ class _AddExpenseState extends State<AddExpense> {
       ),
       backgroundColor: Theme.of(context).colorScheme.onPrimary,
       body: Padding(
-        padding:
-            const EdgeInsets.only(top: 30.0, left: 20, right: 20, bottom: 20),
+        padding: const EdgeInsets.only(top: 30.0, left: 20, right: 20, bottom: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -119,9 +116,7 @@ class _AddExpenseState extends State<AddExpense> {
                         ));
                   }).toList(),
                   onChanged: (value) {
-                    context
-                        .read<ControllerProvider>()
-                        .setExpenseCategory(value!);
+                    context.read<ControllerProvider>().setExpenseCategory(value!);
                   },
                 ),
                 const Spacer(),
@@ -138,27 +133,21 @@ class _AddExpenseState extends State<AddExpense> {
             const SizedBox(
               height: 50,
             ),
+            // TODO: If you are going to use the same screen for adding and editing, the code should be cleaner
+            // TODO: Refactor to have clear overview of the widget tree.
             context.read<ControllerProvider>().isCreating
                 ? ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop();
+                      // TODO: Not good. Refactor.
+                      // TODO: If all the data is stored inside the Provider, why would you instance the [Expense] as a function parameter?
                       context.read<ListProvider>().addToList(
                             Expense(
-                              name: context
-                                  .read<ControllerProvider>()
-                                  .expenseTitleController,
-                              description: context
-                                  .read<ControllerProvider>()
-                                  .expenseDescController,
-                              amount: context
-                                  .read<ControllerProvider>()
-                                  .expenseAmountController,
-                              expenseDate: context
-                                  .read<ControllerProvider>()
-                                  .expenseDateController!,
-                              category: context
-                                  .read<ControllerProvider>()
-                                  .expenseCategoryController!,
+                              name: context.read<ControllerProvider>().expenseTitleController,
+                              description: context.read<ControllerProvider>().expenseDescController,
+                              amount: context.read<ControllerProvider>().expenseAmountController,
+                              expenseDate: context.read<ControllerProvider>().expenseDateController!,
+                              category: context.read<ControllerProvider>().expenseCategoryController!,
                             ),
                           );
                     },
@@ -169,6 +158,8 @@ class _AddExpenseState extends State<AddExpense> {
                   )
                 : ElevatedButton(
                     onPressed: () {
+                      // TODO: Not good. Refactor.
+                      // TODO: If all the data is stored inside the Provider, why would you instance the [Expense] as a function parameter?
                       context.read<ListProvider>().editExpense(
                             widget.expenseId!,
                             context.read<ControllerProvider>().expenseTitle,
@@ -177,6 +168,7 @@ class _AddExpenseState extends State<AddExpense> {
                             context.read<ControllerProvider>().expenseCategory!,
                             context.read<ControllerProvider>().expenseDate!,
                           );
+                      // TODO: This can be done inside the editExpense method.
                       context.read<ControllerProvider>().resetExpenseData();
                       Navigator.of(context).pop();
                     },

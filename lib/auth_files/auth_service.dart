@@ -6,6 +6,9 @@ class AuthService {
     required String password,
   }) async {
     try {
+      // TODO: Google [Dependency Injection], try to understand why this is not the best approach,
+      // TODO: for accessing the [FirebaseAuth.instance]
+      // TODO: Ping me when needed.
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,

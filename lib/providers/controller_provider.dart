@@ -2,12 +2,16 @@ import 'package:expenser/models/expense.dart';
 import 'package:flutter/material.dart';
 
 class ControllerProvider extends ChangeNotifier {
+  // TODO: Suffix controller is only used for [Controller] type variables.
+  // TODO: Refactor and rename variables.
   String expenseTitleController = "";
   String? expenseDescController = "";
   String expenseAmountController = "";
   theCategory? expenseCategoryController = theCategory.food;
   DateTime? expenseDateController;
   bool isCreating = true;
+
+  // TODO: If a variable is declared as public, creating a getter for it is just code duplication.
   String get expenseTitle => expenseTitleController;
 
   String? get expenseDesc => expenseDescController;

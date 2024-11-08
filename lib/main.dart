@@ -13,6 +13,7 @@ import 'package:expenser/providers/controller_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:expenser/auth_files/auth_service.dart';
 
+// TODO: Export theme in a separate file
 final theme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
@@ -26,6 +27,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   String? message;
   final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+  // TODO: Do not save email & password, passwords must not be saved at any times!!!
+  // TODO: Refactor the code to only save the [AuthToken] or [AuthSession]
+  // TODO: Check [Firebase] response to find it.
   final String? email = sharedPref.getString('email');
   final String? password = sharedPref.getString('password');
   if (email != null && password != null) {
@@ -37,6 +41,7 @@ void main() async {
   ));
 }
 
+// TODO: [main.dart] should only contain main method, export [MyApp]
 class MyApp extends StatelessWidget {
   MyApp({super.key, required this.message});
   String? message;
@@ -53,6 +58,8 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         initialRoute: message == null ? '/' : 'home',
+        // TODO: Consider extracting all named routes in a separate file.
+        // e.g we can have a [routes.dart] which holds all this logic, so that we do not crowd the [app.dart]
         routes: {
           '/': (context) => LoginScreen(),
           'home': (context) => HomeScreen(),

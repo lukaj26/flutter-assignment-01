@@ -1,27 +1,21 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-enum theCategory {
-  transportation,
-  housing,
-  food,
-  utilities,
-  clothing,
-  healthcare,
-  personal,
-  work,
-  other
-}
+// TODO: Enum is not a model, we can extract enums in a enum-specific file
+// TODO: Fix naming, remove [the] prefix.
+enum theCategory { transportation, housing, food, utilities, clothing, healthcare, personal, work, other }
 
+// TODO: Resolve the linting error?
 class Expense extends Equatable {
-  Expense(
-      {this.id,
-      this.image,
-      required this.name,
-      this.description,
-      required this.amount,
-      required this.expenseDate,
-      required this.category});
+  Expense({
+    this.id,
+    this.image,
+    required this.name,
+    this.description,
+    required this.amount,
+    required this.expenseDate,
+    required this.category,
+  });
   String? id;
   String name;
   String? description;
@@ -31,7 +25,5 @@ class Expense extends Equatable {
   Image? image;
 
   @override
-  // TODO: implement props
-  List<Object?> get props =>
-      [id, name, description, amount, expenseDate, category, image];
+  List<Object?> get props => [id, name, description, amount, expenseDate, category, image];
 }

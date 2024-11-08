@@ -5,6 +5,7 @@ import 'package:expenser/auth_files/auth_service.dart';
 class RegistrationScreen extends StatelessWidget {
   RegistrationScreen({super.key});
 
+  // TODO: Refactor, check comments left on the [LoginScreen], same logic applies, for this whole file
   final _nameController = TextEditingController();
   final _lastnameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -52,6 +53,9 @@ class RegistrationScreen extends StatelessWidget {
                 contentPadding: EdgeInsets.only(top: 15, bottom: 15),
               ),
             ),
+            // TODO: Missing obscureText
+            // TODO: Good practice also is when the user is setting up password for the first time to have 2 fields ,
+            // TODO: Password and ConfirmPassword
             TextField(
               controller: _passController,
               decoration: const InputDecoration(
@@ -62,9 +66,7 @@ class RegistrationScreen extends StatelessWidget {
             const SizedBox(height: 30),
             FilledButton.icon(
               onPressed: () async {
-                final message = await AuthService().registration(
-                    email: _emailController.text,
-                    password: _passController.text);
+                final message = await AuthService().registration(email: _emailController.text, password: _passController.text);
                 print(_emailController.text);
                 print(_passController.text);
                 if (message!.contains('Success')) {
